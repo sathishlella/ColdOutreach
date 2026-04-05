@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ColdOutreach AI — Day 4 of 100</title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#080b14;color:#e2e8f0;min-height:100vh}
+
+    header{background:linear-gradient(135deg,#0c1a2e 0%,#1a3a5c 50%,#0d4f6e 100%);padding:18px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(56,189,248,0.2)}
+    .logo{display:flex;align-items:center;gap:12px}
+    .logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#38bdf8,#818cf8);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
+    .logo-text h1{font-size:21px;font-weight:700;color:#fff}
+    .logo-text p{font-size:11px;color:#7dd3fc;margin-top:2px}
+    .badge{background:linear-gradient(135deg,#f97316,#ef4444);color:white;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700}
+
+    .container{max-width:1300px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:420px 1fr;gap:24px}
+
+    .card{background:#111827;border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px}
+    .card h2{font-size:15px;font-weight:600;color:#7dd3fc;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+
+    label{display:block;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px}
+    input,textarea,select{width:100%;background:#0a0e1a;border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#e2e8f0;padding:11px 14px;font-size:13px;font-family:inherit;outline:none;margin-bottom:14px;transition:border .2s}
+    input:focus,textarea:focus,select:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,0.12)}
+    textarea{resize:vertical;min-height:70px}
+    select{cursor:pointer}
+
+    .row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+    .btn{padding:12px 24px;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:13px;transition:all .2s}
+    .btn-primary{background:linear-gradient(135deg,#38bdf8,#818cf8);color:#fff;width:100%}
+    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(56,189,248,.4)}
+    .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
+    .btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#94a3b8;padding:8px 14px}
+    .btn-ghost:hover{background:rgba(255,255,255,.08);color:#e2e8f0}
+
+    /* OUTPUT */
+    .output-area{display:flex;flex-direction:column;gap:16px}
+    .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:500px;gap:14px;color:#475569}
+    .empty-state .icon{font-size:56px}
+    .empty-state p{font-size:14px;text-align:center;max-width:300px;line-height:1.6}
+
+    /* PROSPECT CARD */
+    .prospect-card{background:#0f172a;border:1px solid rgba(56,189,248,.15);border-radius:12px;padding:18px;display:flex;gap:14px;align-items:flex-start}
+    .prospect-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#818cf8);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0;color:#fff}
+    .prospect-info .name{font-size:16px;font-weight:700;color:#f1f5f9}
+    .prospect-info .title{font-size:12px;color:#64748b;margin-top:2px}
+    .prospect-info .signals{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+    .signal{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600}
+    .signal-hot{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+    .signal-warm{background:rgba(251,146,60,.15);color:#fdba74;border:1px solid rgba(251,146,60,.2)}
+    .signal-info{background:rgba(56,189,248,.12);color:#7dd3fc;border:1px solid rgba(56,189,248,.2)}
+
+    /* EMAIL CARD */
+    .email-card{background:#111827;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;transition:all .3s}
+    .email-card:hover{border-color:rgba(56,189,248,.25)}
+    .email-header{padding:14px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.04)}
+    .email-variant{font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px}
+    .variant-a{background:rgba(52,211,153,.15);color:#6ee7b7}
+    .variant-b{background:rgba(251,146,60,.15);color:#fdba74}
+    .variant-c{background:rgba(168,85,247,.15);color:#c4b5fd}
+    .email-meta{font-size:11px;color:#64748b;margin-left:auto;display:flex;gap:12px}
+    .email-body{padding:18px;font-size:13px;line-height:1.75;color:#cbd5e0;white-space:pre-wrap;max-height:350px;overflow-y:auto}
+    .email-body::-webkit-scrollbar{width:3px}
+    .email-body::-webkit-scrollbar-thumb{background:rgba(56,189,248,.3);border-radius:2px}
+    .email-footer{padding:10px 18px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px}
+    .email-score{display:flex;align-items:center;gap:6px}
+    .score-dot{width:8px;height:8px;border-radius:50%}
+    .score-high{background:#34d399}
+    .score-med{background:#fbbf24}
+    .score-label{font-size:11px;color:#64748b}
+    .copy-btn{margin-left:auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#94a3b8;border-radius:6px;padding:5px 12px;font-size:11px;cursor:pointer;transition:all .2s}
+    .copy-btn:hover{background:rgba(255,255,255,.1);color:#e2e8f0}
+
+    /* SUBJECT LINE */
+    .subject-line{background:#0f172a;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer;transition:all .2s}
+    .subject-line:hover{border-color:rgba(56,189,248,.3)}
+    .sl-num{width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#38bdf8,#818cf8);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
+    .sl-text{font-size:13px;color:#e2e8f0;font-weight:500;flex:1}
+    .sl-rate{font-size:11px;color:#34d399;font-weight:700}
+
+    /* FOLLOW-UP */
+    .followup-item{background:#0f172a;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 16px;margin-bottom:8px}
+    .followup-day{font-size:11px;font-weight:700;color:#818cf8;margin-bottom:6px}
+    .followup-text{font-size:12px;color:#94a3b8;line-height:1.6}
+
+    /* TABS */
+    .tabs{display:flex;gap:4px;margin-bottom:16px}
+    .tab{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:#64748b;border:1px solid transparent;transition:all .2s}
+    .tab.active{background:rgba(56,189,248,.12);color:#7dd3fc;border-color:rgba(56,189,248,.25)}
+    .tab:hover:not(.active){color:#e2e8f0;background:rgba(255,255,255,.04)}
+    .tab-content{display:none}
+    .tab-content.active{display:block}
+
+    /* LOADING */
+    .loading-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:18px}
+    .loading-overlay.visible{display:flex}
+    .spinner{width:44px;height:44px;border:3px solid rgba(56,189,248,.15);border-top-color:#38bdf8;border-radius:50%;animation:spin .7s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .load-step{font-size:13px;color:#7dd3fc;opacity:0;animation:fadeUp .4s forwards}
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+    .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:#38bdf8;color:#0c1a2e;padding:10px 24px;border-radius:10px;font-size:13px;font-weight:700;transition:transform .3s;z-index:200}
+    .toast.show{transform:translateX(-50%) translateY(0)}
+
+    @media(max-width:900px){.container{grid-template-columns:1fr}.row-2{grid-template-columns:1fr}}
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-icon">🎯</div>
+    <div class="logo-text">
+      <h1>ColdOutreach AI</h1>
+      <p>Research Prospects → Write Hyper-Personalized Cold Emails</p>
+    </div>
+  </div>
+  <div class="badge">🚀 Day 4 of 100</div>
+</header>
+
+<div class="container">
+  <!-- INPUT PANEL -->
+  <div>
+    <div class="card" style="margin-bottom:16px">
+      <h2>🎯 Prospect Details</h2>
+      <label>Prospect Name</label>
+      <input type="text" id="prospectName" placeholder="e.g. Sarah Chen"/>
+      <div class="row-2">
+        <div><label>Title / Role</label><input type="text" id="prospectTitle" placeholder="e.g. VP of Engineering"/></div>
+        <div><label>Company</label><input type="text" id="prospectCompany" placeholder="e.g. Stripe"/></div>
+      </div>
+      <div class="row-2">
+        <div><label>Industry</label><input type="text" id="industry" placeholder="e.g. Fintech"/></div>
+        <div><label>Company Size</label>
+          <select id="companySize">
+            <option value="1-10">1–10 (Startup)</option>
+            <option value="11-50">11–50 (Seed/Series A)</option>
+            <option value="51-200" selected>51–200 (Growth)</option>
+            <option value="201-1000">201–1,000 (Scale-up)</option>
+            <option value="1000+">1,000+ (Enterprise)</option>
+          </select>
+        </div>
+      </div>
+      <label>LinkedIn URL (optional)</label>
+      <input type="text" id="linkedin" placeholder="https://linkedin.com/in/..."/>
+      <label>Known Pain Points / Intel</label>
+      <textarea id="intel" placeholder="e.g. Recently complained about slow deployment cycles on Twitter. Hiring 3 DevOps engineers..."></textarea>
+    </div>
+
+    <div class="card">
+      <h2>✉️ Your Offer</h2>
+      <label>What You're Selling</label>
+      <input type="text" id="product" placeholder="e.g. AI-powered CI/CD platform"/>
+      <label>Key Value Proposition</label>
+      <textarea id="valueProp" placeholder="e.g. Cut deployment time by 80%, zero-downtime releases, 10-minute setup..."></textarea>
+      <div class="row-2">
+        <div><label>Email Tone</label>
+          <select id="tone">
+            <option value="friendly-expert">Friendly Expert</option>
+            <option value="direct-ceo">Direct CEO-to-CEO</option>
+            <option value="curious-consultant">Curious Consultant</option>
+            <option value="peer-builder">Peer Builder</option>
+          </select>
+        </div>
+        <div><label>CTA Style</label>
+          <select id="ctaStyle">
+            <option value="soft-meeting">Soft Meeting Ask</option>
+            <option value="value-first">Value-First (free audit)</option>
+            <option value="social-proof">Social Proof + Ask</option>
+            <option value="no-ask">No Ask (Pure Value)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn btn-primary" id="generateBtn" onclick="generate()">🎯 Generate Cold Outreach Sequence</button>
+    </div>
+  </div>
+
+  <!-- OUTPUT -->
+  <div class="output-area" id="outputArea">
+    <div class="empty-state" id="emptyState">
+      <div class="icon">🎯</div>
+      <p>Enter prospect details and your offer, then hit <strong>Generate</strong> to get a full personalized outreach sequence</p>
+    </div>
+  </div>
+</div>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="spinner"></div>
+  <div id="loadSteps"></div>
+</div>
+
+<div class="toast" id="toast">Copied!</div>
+
+<script>
+async function generate() {
+  const name = document.getElementById('prospectName').value.trim();
+  const company = document.getElementById('prospectCompany').value.trim();
+  if (!name || !company) { alert('Please enter prospect name and company!'); return; }
+
+  const data = {
+    name, company,
+    title: document.getElementById('prospectTitle').value.trim(),
+    industry: document.getElementById('industry').value.trim() || 'Technology',
+    size: document.getElementById('companySize').value,
+    linkedin: document.getElementById('linkedin').value.trim(),
+    intel: document.getElementById('intel').value.trim(),
+    product: document.getElementById('product').value.trim() || 'AI platform',
+    valueProp: document.getElementById('valueProp').value.trim(),
+    tone: document.getElementById('tone').value,
+    ctaStyle: document.getElementById('ctaStyle').value
+  };
+
+  showLoading();
+  await sleep(2600);
+  hideLoading();
+  renderOutput(buildOutput(data));
+}
+
+function showLoading() {
+  document.getElementById('generateBtn').disabled = true;
+  const ol = document.getElementById('loadingOverlay');
+  ol.classList.add('visible');
+  const steps = ['🔍 Researching prospect...','🏢 Analyzing company signals...','🧠 Building personalization hooks...','✉️ Writing email variants...','📊 Scoring & optimizing...','📅 Planning follow-up sequence...'];
+  const cont = document.getElementById('loadSteps');
+  cont.innerHTML = '';
+  steps.forEach((s,i) => {
+    const el = document.createElement('div');
+    el.className = 'load-step';
+    el.textContent = s;
+    el.style.animationDelay = `${i*.4}s`;
+    cont.appendChild(el);
+  });
+}
+function hideLoading() {
+  document.getElementById('loadingOverlay').classList.remove('visible');
+  document.getElementById('generateBtn').disabled = false;
+}
+function sleep(ms){ return new Promise(r=>setTimeout(r,ms)); }
+
+function buildOutput(d) {
+  const initials = d.name.split(' ').map(n=>n[0]).join('').toUpperCase();
+  const firstName = d.name.split(' ')[0];
+
+  const signals = [];
+  if (d.intel) signals.push({text:'Custom Intel Available', cls:'signal-hot'});
+  signals.push({text:`${d.size} employees`, cls:'signal-info'});
+  signals.push({text:d.industry, cls:'signal-info'});
+  if (d.size.includes('1000') || d.size.includes('201')) signals.push({text:'Enterprise Budget', cls:'signal-warm'});
+  if (d.intel.toLowerCase().includes('hiring')) signals.push({text:'Actively Hiring', cls:'signal-hot'});
+  if (d.intel.toLowerCase().includes('slow') || d.intel.toLowerCase().includes('pain') || d.intel.toLowerCase().includes('frustrat')) signals.push({text:'Pain Signal Detected', cls:'signal-hot'});
+
+  const subjects = [
+    {text:`${firstName}, quick thought on ${d.company}'s ${d.industry.toLowerCase()} stack`, rate:'42%'},
+    {text:`Noticed ${d.company} is hiring — this might help`, rate:'38%'},
+    {text:`How ${d.company} could ${d.valueProp.split(',')[0]?.toLowerCase().trim() || 'save 10+ hrs/week'}`, rate:'35%'},
+    {text:`${firstName} — saw your post about ${d.intel.split('.')[0]?.substring(0,40).toLowerCase().trim() || d.industry.toLowerCase()}`, rate:'44%'},
+    {text:`3 ${d.industry.toLowerCase()} teams just switched to this`, rate:'31%'}
+  ];
+
+  const toneMap = {
+    'friendly-expert': {label:'Friendly Expert', opener:`Hey ${firstName},\n\nI was doing some research on ${d.company} and came across something that caught my attention.`},
+    'direct-ceo': {label:'Direct CEO', opener:`${firstName},\n\nI'll keep this short. I think ${d.company} is leaving money on the table.`},
+    'curious-consultant': {label:'Curious Consultant', opener:`Hi ${firstName},\n\nI've been studying how ${d.industry.toLowerCase()} companies like ${d.company} handle their biggest operational challenge. Can I ask you something?`},
+    'peer-builder': {label:'Peer Builder', opener:`Hey ${firstName},\n\nFellow builder here. I've been watching what ${d.company} is doing in the ${d.industry.toLowerCase()} space — really impressive growth.`}
+  };
+
+  const ctaMap = {
+    'soft-meeting': `Would it make sense to hop on a 15-minute call this week? I can walk you through exactly how this would work for ${d.company}. If not, no hard feelings at all.`,
+    'value-first': `I put together a quick ${d.industry.toLowerCase()} benchmark report that shows where ${d.company} stacks up. Happy to send it over — zero strings attached.`,
+    'social-proof': `Three companies in your space (including one you'd definitely recognize) made this switch last quarter. Happy to share what they learned if you're curious.`,
+    'no-ask': `Anyway, just wanted to share in case it's useful. Keep crushing it at ${d.company}.`
+  };
+
+  const t = toneMap[d.tone];
+  const cta = ctaMap[d.ctaStyle];
+
+  const painHook = d.intel
+    ? `\n\nI noticed ${d.intel.split('.')[0].toLowerCase().trim()}. That's actually the exact scenario where ${d.product} makes the biggest difference.`
+    : `\n\nMany ${d.title || 'leaders'}s in ${d.industry.toLowerCase()} tell me their biggest bottleneck is the one thing nobody talks about publicly.`;
+
+  const valueBlock = d.valueProp
+    ? `\n\nHere's what I mean: ${d.valueProp}\n\nWe've helped similar-sized ${d.industry.toLowerCase()} companies achieve this in under 30 days.`
+    : `\n\nWe've helped companies like ${d.company} cut operational costs by 40% and ship 3x faster — without adding headcount.`;
+
+  const emailA = `${t.opener}${painHook}${valueBlock}\n\n${cta}\n\nBest,\nSathish`;
+  const emailB = `${firstName},\n\nI know your inbox is a warzone, so I'll be quick:\n\n→ Problem: Most ${d.industry.toLowerCase()} companies at ${d.company}'s stage hit a wall with ${d.intel ? d.intel.split('.')[0].toLowerCase().trim() : 'scaling operations'}\n→ Solution: ${d.product} — ${d.valueProp.split(',')[0] || 'automates the painful parts'}\n→ Proof: 3 companies in your space saw results in week 1\n\n${cta}\n\n— Sathish`;
+  const emailC = `Hey ${firstName},\n\nRandom question: if you could wave a magic wand and fix ONE thing about how ${d.company} handles ${d.intel ? d.intel.split('.')[0].toLowerCase().trim() : 'growth challenges'} — what would it be?\n\nAsking because we built ${d.product} specifically to solve the top 3 answers we keep hearing from ${d.title || 'leaders'}s in ${d.industry.toLowerCase()}.\n\nThe most common answer? "${d.valueProp.split(',')[0] || 'It takes too long and costs too much.'}"\n\n${cta}\n\nCheers,\nSathish`;
+
+  const followups = [
+    {day:'Day 3 — Bump', text:`Hey ${firstName}, just floating this back up. I know timing is everything — is this on your radar right now, or is Q3 a better time to chat?`},
+    {day:'Day 7 — Value Add', text:`${firstName}, I came across this ${d.industry.toLowerCase()} report that reminded me of ${d.company}. Thought you might find the benchmarks on page 3 useful — [link]. No pitch, just sharing.`},
+    {day:'Day 14 — Breakup', text:`${firstName}, I'll take the hint 😄\n\nI don't want to be that person clogging your inbox. If ${d.product} is ever relevant for ${d.company}, I'm a reply away.\n\nWishing you and the team a great Q2. 🚀`}
+  ];
+
+  return {d, initials, firstName, signals, subjects, emailA, emailB, emailC, followups};
+}
+
+function renderOutput(o) {
+  document.getElementById('emptyState')?.remove();
+  const area = document.getElementById('outputArea');
+  area.innerHTML = '';
+
+  // Prospect card
+  area.innerHTML += `
+    <div class="prospect-card">
+      <div class="prospect-avatar">${o.initials}</div>
+      <div class="prospect-info">
+        <div class="name">${o.d.name}</div>
+        <div class="title">${o.d.title || 'Decision Maker'} · ${o.d.company} · ${o.d.industry}</div>
+        <div class="signals">${o.signals.map(s=>`<span class="signal ${s.cls}">${s.text}</span>`).join('')}</div>
+      </div>
+    </div>`;
+
+  // Subject lines
+  let subjectsHtml = `<div class="card"><h2>📬 Subject Lines (A/B Test)</h2>`;
+  o.subjects.forEach((s,i) => {
+    subjectsHtml += `<div class="subject-line" onclick="copySL(this)"><div class="sl-num">${i+1}</div><div class="sl-text">${s.text}</div><div class="sl-rate">~${s.rate} open</div></div>`;
+  });
+  subjectsHtml += `</div>`;
+  area.innerHTML += subjectsHtml;
+
+  // Tabs + emails
+  area.innerHTML += `
+    <div class="card">
+      <div class="tabs">
+        <div class="tab active" onclick="switchEmailTab('a')">✉️ Variant A</div>
+        <div class="tab" onclick="switchEmailTab('b')">⚡ Variant B (Short)</div>
+        <div class="tab" onclick="switchEmailTab('c')">💬 Variant C (Question)</div>
+        <div class="tab" onclick="switchEmailTab('followup')">📅 Follow-up Sequence</div>
+      </div>
+      <div class="tab-content active" id="etab-a">${makeEmailCard(o.emailA,'Variant A — Storytelling','variant-a','93%','High',o)}</div>
+      <div class="tab-content" id="etab-b">${makeEmailCard(o.emailB,'Variant B — Punchy & Direct','variant-b','88%','High',o)}</div>
+      <div class="tab-content" id="etab-c">${makeEmailCard(o.emailC,'Variant C — Question Hook','variant-c','85%','Med',o)}</div>
+      <div class="tab-content" id="etab-followup">${o.followups.map(f=>`<div class="followup-item"><div class="followup-day">${f.day}</div><div class="followup-text">${esc(f.text)}</div></div>`).join('')}</div>
+    </div>`;
+
+  window._emails = {a:o.emailA, b:o.emailB, c:o.emailC};
+}
+
+function makeEmailCard(text, label, variantCls, personalization, score, o) {
+  const scoreCls = score === 'High' ? 'score-high' : 'score-med';
+  return `
+    <div class="email-card">
+      <div class="email-header">
+        <span class="email-variant ${variantCls}">${label}</span>
+        <div class="email-meta"><span>~${text.split(/\s+/).length} words</span><span>Personalization: ${personalization}</span></div>
+      </div>
+      <div class="email-body">${esc(text)}</div>
+      <div class="email-footer">
+        <div class="email-score"><div class="score-dot ${scoreCls}"></div><span class="score-label">Reply potential: ${score}</span></div>
+        <button class="copy-btn" onclick="copyEmail('${variantCls.replace('variant-','')}')">📋 Copy</button>
+      </div>
+    </div>`;
+}
+
+function switchEmailTab(tab) {
+  document.querySelectorAll('.tabs .tab').forEach((t,i)=>{
+    const tabs = ['a','b','c','followup'];
+    t.classList.toggle('active', tabs[i]===tab);
+  });
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById(`etab-${tab}`).classList.add('active');
+}
+
+function copyEmail(variant) {
+  const text = window._emails[variant];
+  if (text) {
+    navigator.clipboard.writeText(text);
+    showToast('Email copied!');
+  }
+}
+function copySL(el) {
+  const text = el.querySelector('.sl-text').textContent;
+  navigator.clipboard.writeText(text);
+  showToast('Subject line copied!');
+}
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),1800);
+}
+function esc(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+// Prefill demo
+window.onload = () => {
+  document.getElementById('prospectName').value = 'Sarah Chen';
+  document.getElementById('prospectTitle').value = 'VP of Engineering';
+  document.getElementById('prospectCompany').value = 'Stripe';
+  document.getElementById('industry').value = 'Fintech';
+  document.getElementById('intel').value = 'Recently tweeted about deployment bottlenecks. Hiring 3 DevOps engineers. Their status page shows 2 incidents last month.';
+  document.getElementById('product').value = 'DeployFast — AI-powered CI/CD platform';
+  document.getElementById('valueProp').value = 'Cut deployment time by 80%, zero-downtime releases, 10-minute setup, works with existing stack';
+};
+</script>
+</body>
+</html>

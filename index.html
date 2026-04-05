@@ -6,102 +6,102 @@
   <title>ColdOutreach AI — Day 4 of 100</title>
   <style>
     *{box-sizing:border-box;margin:0;padding:0}
-    body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:#080b14;color:#e2e8f0;min-height:100vh}
+    body{font-family:'Segoe UI','Helvetica Neue',system-ui,-apple-system,sans-serif;background:#fafafa;color:#111111;min-height:100vh}
 
-    header{background:linear-gradient(135deg,#0c1a2e 0%,#1a3a5c 50%,#0d4f6e 100%);padding:18px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(56,189,248,0.2)}
+    header{background:linear-gradient(135deg,#ffffff 0%,#f5f5f5 100%);padding:20px 40px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(0,0,0,0.08);box-shadow:0 2px 12px rgba(0,0,0,0.06)}
     .logo{display:flex;align-items:center;gap:12px}
-    .logo-icon{width:42px;height:42px;background:linear-gradient(135deg,#38bdf8,#818cf8);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:22px}
-    .logo-text h1{font-size:21px;font-weight:700;color:#fff}
-    .logo-text p{font-size:11px;color:#7dd3fc;margin-top:2px}
+    .logo-icon{width:44px;height:44px;background:linear-gradient(135deg,#1e40af,#3b82f6);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;color:#ffffff;box-shadow:0 4px 16px rgba(30,64,175,0.3)}
+    .logo-text h1{font-size:22px;font-weight:800;color:#000000;letter-spacing:-0.5px}
+    .logo-text p{font-size:11px;color:#666666;margin-top:2px;font-weight:500}
     .badge{background:linear-gradient(135deg,#f97316,#ef4444);color:white;padding:6px 14px;border-radius:20px;font-size:12px;font-weight:700}
 
     .container{max-width:1300px;margin:0 auto;padding:28px 20px;display:grid;grid-template-columns:420px 1fr;gap:24px}
 
-    .card{background:#111827;border:1px solid rgba(255,255,255,0.06);border-radius:14px;padding:24px}
-    .card h2{font-size:15px;font-weight:600;color:#7dd3fc;margin-bottom:18px;display:flex;align-items:center;gap:8px}
+    .card{background:#ffffff;border:1px solid rgba(0,0,0,0.06);border-radius:16px;padding:28px;box-shadow:0 4px 24px rgba(0,0,0,0.05)}
+    .card h2{font-size:15px;font-weight:700;color:#000000;margin-bottom:20px;display:flex;align-items:center;gap:8px;letter-spacing:-0.3px}
 
-    label{display:block;font-size:11px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.7px;margin-bottom:6px}
-    input,textarea,select{width:100%;background:#0a0e1a;border:1px solid rgba(255,255,255,0.08);border-radius:10px;color:#e2e8f0;padding:11px 14px;font-size:13px;font-family:inherit;outline:none;margin-bottom:14px;transition:border .2s}
-    input:focus,textarea:focus,select:focus{border-color:#38bdf8;box-shadow:0 0 0 3px rgba(56,189,248,0.12)}
+    label{display:block;font-size:11px;font-weight:700;color:#333333;text-transform:uppercase;letter-spacing:.8px;margin-bottom:8px}
+    input,textarea,select{width:100%;background:#ffffff;border:1px solid rgba(0,0,0,0.12);border-radius:11px;color:#000000;padding:12px 16px;font-size:13px;font-family:inherit;outline:none;margin-bottom:16px;transition:all .3s;box-shadow:0 1px 3px rgba(0,0,0,0.03)}
+    input:focus,textarea:focus,select:focus{border-color:#1e40af;box-shadow:0 0 0 3px rgba(30,64,175,0.1),0 1px 3px rgba(0,0,0,0.03)}
     textarea{resize:vertical;min-height:70px}
     select{cursor:pointer}
 
     .row-2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 
     .btn{padding:12px 24px;border:none;border-radius:10px;font-weight:700;cursor:pointer;font-size:13px;transition:all .2s}
-    .btn-primary{background:linear-gradient(135deg,#38bdf8,#818cf8);color:#fff;width:100%}
-    .btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 20px rgba(56,189,248,.4)}
+    .btn-primary{background:linear-gradient(135deg,#1e40af,#3b82f6);color:#fff;width:100%;font-weight:700;letter-spacing:-0.3px;box-shadow:0 4px 16px rgba(30,64,175,0.25)}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(30,64,175,0.35)}
     .btn-primary:disabled{opacity:.5;cursor:not-allowed;transform:none}
-    .btn-ghost{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);color:#94a3b8;padding:8px 14px}
-    .btn-ghost:hover{background:rgba(255,255,255,.08);color:#e2e8f0}
+    .btn-ghost{background:transparent;border:1px solid rgba(0,0,0,0.15);color:#333333;padding:8px 14px;font-weight:600}
+    .btn-ghost:hover{background:rgba(0,0,0,.05);color:#000000;border-color:rgba(0,0,0,0.25)}
 
     /* OUTPUT */
     .output-area{display:flex;flex-direction:column;gap:16px}
-    .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:500px;gap:14px;color:#475569}
+    .empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:500px;gap:14px;color:#999999}
     .empty-state .icon{font-size:56px}
     .empty-state p{font-size:14px;text-align:center;max-width:300px;line-height:1.6}
 
     /* PROSPECT CARD */
-    .prospect-card{background:#0f172a;border:1px solid rgba(56,189,248,.15);border-radius:12px;padding:18px;display:flex;gap:14px;align-items:flex-start}
-    .prospect-avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,#38bdf8,#818cf8);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;flex-shrink:0;color:#fff}
-    .prospect-info .name{font-size:16px;font-weight:700;color:#f1f5f9}
-    .prospect-info .title{font-size:12px;color:#64748b;margin-top:2px}
+    .prospect-card{background:#ffffff;border:1px solid rgba(0,0,0,0.08);border-radius:14px;padding:20px;display:flex;gap:16px;align-items:flex-start;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+    .prospect-avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,#1e40af,#3b82f6);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px;flex-shrink:0;color:#fff;box-shadow:0 4px 12px rgba(30,64,175,0.25)}
+    .prospect-info .name{font-size:16px;font-weight:800;color:#000000;letter-spacing:-0.3px}
+    .prospect-info .title{font-size:12px;color:#666666;margin-top:3px;font-weight:500}
     .prospect-info .signals{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
     .signal{font-size:10px;padding:3px 10px;border-radius:20px;font-weight:600}
-    .signal-hot{background:rgba(239,68,68,.15);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
-    .signal-warm{background:rgba(251,146,60,.15);color:#fdba74;border:1px solid rgba(251,146,60,.2)}
-    .signal-info{background:rgba(56,189,248,.12);color:#7dd3fc;border:1px solid rgba(56,189,248,.2)}
+    .signal-hot{background:rgba(220,38,38,.12);color:#991b1b;border:1px solid rgba(220,38,38,.2);font-weight:600}
+    .signal-warm{background:rgba(234,88,12,.12);color:#92400e;border:1px solid rgba(234,88,12,.2);font-weight:600}
+    .signal-info{background:rgba(30,64,175,.12);color:#1e3a8a;border:1px solid rgba(30,64,175,.2);font-weight:600}
 
     /* EMAIL CARD */
-    .email-card{background:#111827;border:1px solid rgba(255,255,255,.06);border-radius:14px;overflow:hidden;transition:all .3s}
-    .email-card:hover{border-color:rgba(56,189,248,.25)}
-    .email-header{padding:14px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid rgba(255,255,255,.04)}
+    .email-card{background:#ffffff;border:1px solid rgba(0,0,0,0.06);border-radius:14px;overflow:hidden;transition:all .3s;box-shadow:0 2px 12px rgba(0,0,0,0.04)}
+    .email-card:hover{border-color:rgba(30,64,175,.3);box-shadow:0 4px 20px rgba(0,0,0,0.08)}
+    .email-header{padding:16px 20px;display:flex;align-items:center;gap:12px;border-bottom:1px solid rgba(0,0,0,.06);background:#fafafa}
     .email-variant{font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;text-transform:uppercase;letter-spacing:.5px}
-    .variant-a{background:rgba(52,211,153,.15);color:#6ee7b7}
-    .variant-b{background:rgba(251,146,60,.15);color:#fdba74}
-    .variant-c{background:rgba(168,85,247,.15);color:#c4b5fd}
-    .email-meta{font-size:11px;color:#64748b;margin-left:auto;display:flex;gap:12px}
-    .email-body{padding:18px;font-size:13px;line-height:1.75;color:#cbd5e0;white-space:pre-wrap;max-height:350px;overflow-y:auto}
+    .variant-a{background:rgba(52,211,153,.15);color:#16a34a}
+    .variant-b{background:rgba(251,146,60,.15);color:#ea580c}
+    .variant-c{background:rgba(168,85,247,.15);color:#9333ea}
+    .email-meta{font-size:11px;color:#777777;margin-left:auto;display:flex;gap:12px;font-weight:500}
+    .email-body{padding:20px;font-size:13px;line-height:1.8;color:#333333;white-space:pre-wrap;max-height:350px;overflow-y:auto;font-weight:500}
     .email-body::-webkit-scrollbar{width:3px}
-    .email-body::-webkit-scrollbar-thumb{background:rgba(56,189,248,.3);border-radius:2px}
-    .email-footer{padding:10px 18px;border-top:1px solid rgba(255,255,255,.04);display:flex;align-items:center;gap:8px}
+    .email-body::-webkit-scrollbar-thumb{background:rgba(59,130,246,.3);border-radius:2px}
+    .email-footer{padding:12px 20px;border-top:1px solid rgba(0,0,0,.06);display:flex;align-items:center;gap:8px;background:#fafafa}
     .email-score{display:flex;align-items:center;gap:6px}
     .score-dot{width:8px;height:8px;border-radius:50%}
-    .score-high{background:#34d399}
-    .score-med{background:#fbbf24}
-    .score-label{font-size:11px;color:#64748b}
-    .copy-btn{margin-left:auto;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);color:#94a3b8;border-radius:6px;padding:5px 12px;font-size:11px;cursor:pointer;transition:all .2s}
-    .copy-btn:hover{background:rgba(255,255,255,.1);color:#e2e8f0}
+    .score-high{background:#16a34a}
+    .score-med{background:#eab308}
+    .score-label{font-size:11px;color:#777777;font-weight:600}
+    .copy-btn{margin-left:auto;background:rgba(30,64,175,.08);border:1px solid rgba(30,64,175,.2);color:#1e40af;border-radius:7px;padding:6px 14px;font-size:11px;cursor:pointer;transition:all .2s;font-weight:600}
+    .copy-btn:hover{background:rgba(30,64,175,.15);color:#1e40af;border-color:rgba(30,64,175,.4)}
 
     /* SUBJECT LINE */
-    .subject-line{background:#0f172a;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:12px 16px;display:flex;align-items:center;gap:10px;margin-bottom:8px;cursor:pointer;transition:all .2s}
-    .subject-line:hover{border-color:rgba(56,189,248,.3)}
-    .sl-num{width:22px;height:22px;border-radius:5px;background:linear-gradient(135deg,#38bdf8,#818cf8);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0}
-    .sl-text{font-size:13px;color:#e2e8f0;font-weight:500;flex:1}
-    .sl-rate{font-size:11px;color:#34d399;font-weight:700}
+    .subject-line{background:#ffffff;border:1px solid rgba(0,0,0,.06);border-radius:11px;padding:14px 16px;display:flex;align-items:center;gap:12px;margin-bottom:10px;cursor:pointer;transition:all .3s;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
+    .subject-line:hover{border-color:rgba(30,64,175,.3);box-shadow:0 2px 8px rgba(0,0,0,0.06)}
+    .sl-num{width:24px;height:24px;border-radius:6px;background:linear-gradient(135deg,#1e40af,#3b82f6);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;flex-shrink:0;color:#ffffff;box-shadow:0 2px 8px rgba(30,64,175,0.2)}
+    .sl-text{font-size:13px;color:#000000;font-weight:600;flex:1;letter-spacing:-0.2px}
+    .sl-rate{font-size:11px;color:#16a34a;font-weight:700}
 
     /* FOLLOW-UP */
-    .followup-item{background:#0f172a;border:1px solid rgba(255,255,255,.06);border-radius:10px;padding:14px 16px;margin-bottom:8px}
-    .followup-day{font-size:11px;font-weight:700;color:#818cf8;margin-bottom:6px}
-    .followup-text{font-size:12px;color:#94a3b8;line-height:1.6}
+    .followup-item{background:#ffffff;border:1px solid rgba(0,0,0,.06);border-radius:11px;padding:16px 18px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,0.03)}
+    .followup-day{font-size:11px;font-weight:800;color:#1e40af;margin-bottom:8px;text-transform:uppercase;letter-spacing:.6px}
+    .followup-text{font-size:12px;color:#555555;line-height:1.7;font-weight:500}
 
     /* TABS */
-    .tabs{display:flex;gap:4px;margin-bottom:16px}
-    .tab{padding:7px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;color:#64748b;border:1px solid transparent;transition:all .2s}
-    .tab.active{background:rgba(56,189,248,.12);color:#7dd3fc;border-color:rgba(56,189,248,.25)}
-    .tab:hover:not(.active){color:#e2e8f0;background:rgba(255,255,255,.04)}
+    .tabs{display:flex;gap:8px;margin-bottom:20px}
+    .tab{padding:9px 16px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;color:#666666;border:1px solid transparent;transition:all .3s;letter-spacing:-0.2px}
+    .tab.active{background:linear-gradient(135deg,rgba(30,64,175,0.12),rgba(59,130,246,0.12));color:#1e40af;border:1px solid rgba(30,64,175,0.2)}
+    .tab:hover:not(.active){color:#000000;background:rgba(0,0,0,.04);border:1px solid rgba(0,0,0,.1)}
     .tab-content{display:none}
     .tab-content.active{display:block}
 
     /* LOADING */
-    .loading-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:18px}
+    .loading-overlay{display:none;position:fixed;inset:0;background:rgba(255,255,255,.95);backdrop-filter:blur(4px);z-index:100;align-items:center;justify-content:center;flex-direction:column;gap:24px}
     .loading-overlay.visible{display:flex}
-    .spinner{width:44px;height:44px;border:3px solid rgba(56,189,248,.15);border-top-color:#38bdf8;border-radius:50%;animation:spin .7s linear infinite}
+    .spinner{width:48px;height:48px;border:3px solid rgba(30,64,175,.15);border-top-color:#1e40af;border-radius:50%;animation:spin .7s linear infinite;box-shadow:0 4px 16px rgba(30,64,175,0.2)}
     @keyframes spin{to{transform:rotate(360deg)}}
-    .load-step{font-size:13px;color:#7dd3fc;opacity:0;animation:fadeUp .4s forwards}
+    .load-step{font-size:13px;color:#1e40af;opacity:0;animation:fadeUp .4s forwards;font-weight:600}
     @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
 
-    .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:#38bdf8;color:#0c1a2e;padding:10px 24px;border-radius:10px;font-size:13px;font-weight:700;transition:transform .3s;z-index:200}
+    .toast{position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(100px);background:linear-gradient(135deg,#1e40af,#3b82f6);color:#ffffff;padding:12px 28px;border-radius:10px;font-size:13px;font-weight:700;transition:transform .3s;z-index:200;box-shadow:0 6px 24px rgba(30,64,175,0.3)}
     .toast.show{transform:translateX(-50%) translateY(0)}
 
     @media(max-width:900px){.container{grid-template-columns:1fr}.row-2{grid-template-columns:1fr}}
@@ -111,20 +111,20 @@
 
 <header>
   <div class="logo">
-    <div class="logo-icon">🎯</div>
+    <div class="logo-icon">⚡</div>
     <div class="logo-text">
       <h1>ColdOutreach AI</h1>
       <p>Research Prospects → Write Hyper-Personalized Cold Emails</p>
     </div>
   </div>
-  <div class="badge">🚀 Day 4 of 100</div>
+  <div class="badge">Day 4 of 100</div>
 </header>
 
 <div class="container">
   <!-- INPUT PANEL -->
   <div>
     <div class="card" style="margin-bottom:16px">
-      <h2>🎯 Prospect Details</h2>
+      <h2>Prospect Details</h2>
       <label>Prospect Name</label>
       <input type="text" id="prospectName" placeholder="e.g. Sarah Chen"/>
       <div class="row-2">
@@ -150,7 +150,7 @@
     </div>
 
     <div class="card">
-      <h2>✉️ Your Offer</h2>
+      <h2>Your Offer</h2>
       <label>What You're Selling</label>
       <input type="text" id="product" placeholder="e.g. AI-powered CI/CD platform"/>
       <label>Key Value Proposition</label>
@@ -173,14 +173,14 @@
           </select>
         </div>
       </div>
-      <button class="btn btn-primary" id="generateBtn" onclick="generate()">🎯 Generate Cold Outreach Sequence</button>
+      <button class="btn btn-primary" id="generateBtn" onclick="generate()">Generate Outreach Sequence</button>
     </div>
   </div>
 
   <!-- OUTPUT -->
   <div class="output-area" id="outputArea">
     <div class="empty-state" id="emptyState">
-      <div class="icon">🎯</div>
+      <div class="icon">→</div>
       <p>Enter prospect details and your offer, then hit <strong>Generate</strong> to get a full personalized outreach sequence</p>
     </div>
   </div>
@@ -315,7 +315,7 @@ function renderOutput(o) {
     </div>`;
 
   // Subject lines
-  let subjectsHtml = `<div class="card"><h2>📬 Subject Lines (A/B Test)</h2>`;
+    let subjectsHtml = `<div class="card"><h2>Subject Lines (A/B Test)</h2>`;
   o.subjects.forEach((s,i) => {
     subjectsHtml += `<div class="subject-line" onclick="copySL(this)"><div class="sl-num">${i+1}</div><div class="sl-text">${s.text}</div><div class="sl-rate">~${s.rate} open</div></div>`;
   });
@@ -326,14 +326,14 @@ function renderOutput(o) {
   area.innerHTML += `
     <div class="card">
       <div class="tabs">
-        <div class="tab active" onclick="switchEmailTab('a')">✉️ Variant A</div>
-        <div class="tab" onclick="switchEmailTab('b')">⚡ Variant B (Short)</div>
-        <div class="tab" onclick="switchEmailTab('c')">💬 Variant C (Question)</div>
-        <div class="tab" onclick="switchEmailTab('followup')">📅 Follow-up Sequence</div>
+        <div class="tab active" onclick="switchEmailTab('a')">Variant A</div>
+        <div class="tab" onclick="switchEmailTab('b')">Variant B (Short)</div>
+        <div class="tab" onclick="switchEmailTab('c')">Variant C (Question)</div>
+        <div class="tab" onclick="switchEmailTab('followup')">Follow-up Sequence</div>
       </div>
-      <div class="tab-content active" id="etab-a">${makeEmailCard(o.emailA,'Variant A — Storytelling','variant-a','93%','High',o)}</div>
-      <div class="tab-content" id="etab-b">${makeEmailCard(o.emailB,'Variant B — Punchy & Direct','variant-b','88%','High',o)}</div>
-      <div class="tab-content" id="etab-c">${makeEmailCard(o.emailC,'Variant C — Question Hook','variant-c','85%','Med',o)}</div>
+      <div class="tab-content" id="etab-a">${makeEmailCard(o.emailA,'Variant A – Storytelling','variant-a','93%','High',o)}</div>
+      <div class="tab-content" id="etab-b">${makeEmailCard(o.emailB,'Variant B – Punchy & Direct','variant-b','88%','High',o)}</div>
+      <div class="tab-content" id="etab-c">${makeEmailCard(o.emailC,'Variant C – Question Hook','variant-c','85%','Med',o)}</div>
       <div class="tab-content" id="etab-followup">${o.followups.map(f=>`<div class="followup-item"><div class="followup-day">${f.day}</div><div class="followup-text">${esc(f.text)}</div></div>`).join('')}</div>
     </div>`;
 
@@ -351,7 +351,7 @@ function makeEmailCard(text, label, variantCls, personalization, score, o) {
       <div class="email-body">${esc(text)}</div>
       <div class="email-footer">
         <div class="email-score"><div class="score-dot ${scoreCls}"></div><span class="score-label">Reply potential: ${score}</span></div>
-        <button class="copy-btn" onclick="copyEmail('${variantCls.replace('variant-','')}')">📋 Copy</button>
+        <button class="copy-btn" onclick="copyEmail('${variantCls.replace('variant-','')}'">Copy</button>
       </div>
     </div>`;
 }
